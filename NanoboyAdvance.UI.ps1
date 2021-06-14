@@ -1,8 +1,10 @@
-# Load required assemblies
+## Load required assemblies
+#
 Add-Type -AssemblyName System.Windows.Forms
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
 
-# Hide the powershell window: https://stackoverflow.com/a/27992426/1069307
+## Hide the powershell window: https://stackoverflow.com/a/27992426/1069307
+#
 $t = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);'
 add-type -name win -member $t -namespace native
 [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0)
@@ -35,7 +37,8 @@ add-type -name win -member $t -namespace native
 </Window>
 '@
 
-# Read XAML
+## Read XAML
+#
 $reader = (New-Object System.Xml.XmlNodeReader $xaml)
 try { $Form = [Windows.Markup.XamlReader]::Load( $reader ) }
 catch { Write-Host "Unable to load Windows.Markup.XamlReader. Some possible causes for this problem include: .NET Framework is missing PowerShell must be launched with PowerShell -sta, invalid XAML code was encountered."; exit }
@@ -48,12 +51,14 @@ $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{
 }
 
 ## XAML objects and controls
+#
 $browse = $Form.FindName("openRom")
 $about = $Form.FindName("aboutInfo")
 $help = $Form.FindName("helpInfo")
 $config = $Form.FindName("editConfig")
 
-# Click Actions
+## Click Actions
+#
 $browse.Add_Click(
     {
         
