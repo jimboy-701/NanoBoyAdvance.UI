@@ -28,9 +28,9 @@ add-type -name win -member $t -namespace native
         <Button x:Name="helpInfo" Content="Help" HorizontalAlignment="Left" Margin="254,111.04,0,0" VerticalAlignment="Top" Width="75"/>
         <Button x:Name="editConfig" Content="Edit Config" HorizontalAlignment="Left" Margin="174,111.04,0,0" VerticalAlignment="Top" Width="75"/>
         <CheckBox Content="Fullscreen" HorizontalAlignment="Left" Margin="114.571,33.048,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.182,-0.993"/>
-       
+
         <GroupBox Header="A simple launcher for NanoboyAdvance Emulator" HorizontalAlignment="Left" Height="142" VerticalAlignment="Top" Width="336.143" FontSize="14" Margin="4,0,0,0">
-        
+
         </GroupBox>
 
     </Grid>
@@ -61,11 +61,11 @@ $config = $Form.FindName("editConfig")
 #
 $browse.Add_Click(
     {
-        
+
         [void]$FileBrowser.ShowDialog()
         $filePath = '"' + $FileBrowser.FileName + '"'
         $arguments = '-f'
-        Start-Process -Wait dgen.exe -ArgumentList $arguments, $filePath
+        Start-Process -Wait NanoboyAdvance.exe -ArgumentList $arguments, $filePath
 
         # Uncomment Below for debugging
         # [System.Windows.MessageBox]::Show($filePath)
@@ -74,11 +74,11 @@ $browse.Add_Click(
     })
 
 $about.Add_Click(
-    { 
-        $version = .\dgen.exe -v
+    {
+        $version = HOSTNAME.EXE
         # Write-Host "$version"
         [System.Windows.MessageBox]::Show($version)
-    
+
     })
 
 $help.Add_Click(
@@ -88,7 +88,7 @@ $help.Add_Click(
 
 $config.Add_Click(
     {
-        Start-Process notepad.exe .\dgen.cfg
+        Start-Process notepad.exe .\config.toml
     })
 
 [void]$Form.ShowDialog()
