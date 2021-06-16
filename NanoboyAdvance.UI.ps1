@@ -43,11 +43,15 @@ $reader = (New-Object System.Xml.XmlNodeReader $xaml)
 try { $Form = [Windows.Markup.XamlReader]::Load( $reader ) }
 catch { Write-Host "Unable to load Windows.Markup.XamlReader. Some possible causes for this problem include: .NET Framework is missing PowerShell must be launched with PowerShell -sta, invalid XAML code was encountered."; exit }
 
+# function NullRom {
+# [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
+# [Microsoft.VisualBasic.Interaction]::MsgBox("Please select a GBA rom file first",'OKOnly,Information',"DGEN Error")
+# }
+
 $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{
     InitialDirectory = [Environment]::GetFolderPath('Desktop')
     Filter           = 'Gameboy Advance (*.gba)|*.gba|All Files (*.*)|*.*'
     Title            = 'Select GBA rom to play:'
-
 }
 
 ## XAML objects and controls
@@ -61,17 +65,23 @@ $config = $Form.FindName("editConfig")
 #
 $browse.Add_Click(
     {
-
         [void]$FileBrowser.ShowDialog()
         $filePath = '"' + $FileBrowser.FileName + '"'
         $arguments = '-f'
-        Start-Process -Wait NanoboyAdvance.exe -ArgumentList $arguments, $filePath
 
-        # Uncomment Below for debugging
+        if ($filePath -ne '"' + '"')
+            {Start-Process -Wait NanoboyAdvance.exe -ArgumentList $arguments, $filePath; exit}
+
+        [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
+        [Microsoft.VisualBasic.Interaction]::MsgBox("Please select a GBA rom file first",'OKOnly,Information',"DGEN Error")
+
+        # Uncomment below for debugging
         # [System.Windows.MessageBox]::Show($filePath)
         # Write-Host "$dgenemu" "$arguments" "$filePath"
 
     })
+
+
 
 $about.Add_Click(
     {
