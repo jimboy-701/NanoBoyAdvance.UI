@@ -73,27 +73,23 @@ $browse.Add_Click(
             {Start-Process -Wait NanoboyAdvance.exe -ArgumentList $arguments, $filePath; exit}
 
         [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
-        [Microsoft.VisualBasic.Interaction]::MsgBox("Please select a GBA rom file first",'OKOnly,Information',"DGEN Error")
+        [Microsoft.VisualBasic.Interaction]::MsgBox("Please select a GBA rom file first",'OKOnly,Information',"NanoboyAdvance.UI Error")
 
         # Uncomment below for debugging
         # [System.Windows.MessageBox]::Show($filePath)
         # Write-Host "$dgenemu" "$arguments" "$filePath"
-
     })
-
-
 
 $about.Add_Click(
     {
         $version = HOSTNAME.EXE
         # Write-Host "$version"
         [System.Windows.MessageBox]::Show($version)
-
     })
 
 $help.Add_Click(
     {
-        Start-Process notepad.exe .\dgen.1.txt
+        Start-Process notepad.exe .\log.txt
     })
 
 $config.Add_Click(
