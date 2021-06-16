@@ -5,3 +5,5 @@ keymap.toml
 libwinpthread-1.dll
 NanoboyAdvance.exe
 log.txt
+bios.bin
+.vscode/launch.json
