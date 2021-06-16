@@ -23,15 +23,14 @@ add-type -name win -member $t -namespace native
             <ComboBoxItem Content="800x600" HorizontalAlignment="Left" Width="118"/>
             <ComboBoxItem Content="1024x768" HorizontalAlignment="Left" Width="148"/>
         </ComboBox>
+
         <Button x:Name="openRom" Content="Open Rom" HorizontalAlignment="Left" Margin="15.143,33.048,0,0" VerticalAlignment="Top" Width="75"/>
         <Button x:Name="aboutInfo" Content="About" HorizontalAlignment="Left" Margin="254,86.08,0,0" VerticalAlignment="Top" Width="75"/>
         <Button x:Name="helpInfo" Content="Help" HorizontalAlignment="Left" Margin="254,111.04,0,0" VerticalAlignment="Top" Width="75"/>
         <Button x:Name="editConfig" Content="Edit Config" HorizontalAlignment="Left" Margin="174,111.04,0,0" VerticalAlignment="Top" Width="75"/>
         <CheckBox Content="Fullscreen" HorizontalAlignment="Left" Margin="114.571,33.048,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.182,-0.993"/>
 
-        <GroupBox Header="A simple launcher for NanoboyAdvance Emulator" HorizontalAlignment="Left" Height="142" VerticalAlignment="Top" Width="336.143" FontSize="14" Margin="4,0,0,0">
-
-        </GroupBox>
+        <GroupBox Header="A simple launcher for NanoboyAdvance Emulator" HorizontalAlignment="Left" Height="142" VerticalAlignment="Top" Width="336.143" FontSize="14" Margin="4,0,0,0"></GroupBox>
 
     </Grid>
 </Window>
@@ -67,13 +66,13 @@ $browse.Add_Click(
     {
         [void]$FileBrowser.ShowDialog()
         $filePath = '"' + $FileBrowser.FileName + '"'
-        $arguments = '-f'
+        $arguments = '--sync-to-audio no'
 
         if ($filePath -ne '"' + '"')
-            {Start-Process -Wait NanoboyAdvance.exe -ArgumentList $arguments, $filePath; exit}
+            {Start-Process -Wait NanoboyAdvance.exe -ArgumentList $arguments, $filePath}
 
-        [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
-        [Microsoft.VisualBasic.Interaction]::MsgBox("Please select a GBA rom file first",'OKOnly,Information',"NanoboyAdvance.UI Error")
+        # [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
+        # [Microsoft.VisualBasic.Interaction]::MsgBox("Please select a GBA rom file first",'OKOnly,Information',"NanoboyAdvance.UI Error")
 
         # Uncomment below for debugging
         # [System.Windows.MessageBox]::Show($filePath)
