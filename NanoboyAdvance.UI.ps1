@@ -9,7 +9,7 @@ $t = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle,
 add-type -name win -member $t -namespace native
 [native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0)
 
-[xml]$XAML = @'
+[xml]$xaml = @'
 <Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
