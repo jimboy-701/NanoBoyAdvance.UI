@@ -1,2 +1,3 @@
 # NanoBoyAdvance.UI
-A simple NanoBoyAdvance emulator Front-end powered by Powershell and XAML scripting.
+A simple NanoBoyAdvance Front-end powered by Powershell and XAML code.
+
