@@ -17,11 +17,12 @@ add-type -name win -member $t -namespace native
         Title="NanoboyAdvance.UI" Height="183" Width="359" WindowStartupLocation = "CenterScreen">
 
     <Grid>
-        <ComboBox HorizontalAlignment="Left" Margin="29.665,112.237,0,0" VerticalAlignment="Top" Width="135" Height="25">
-            <ComboBoxItem Content="Default" HorizontalAlignment="Left" Width="118"/>
-            <ComboBoxItem Content="Full Screen" HorizontalAlignment="Left" Width="118"/>
-            <ComboBoxItem Content="800x600" HorizontalAlignment="Left" Width="118"/>
-            <ComboBoxItem Content="1024x768" HorizontalAlignment="Left" Width="148"/>
+        <ComboBox x:Name="ScreenSize" HorizontalAlignment="Left" Margin="29.665,112.237,0,0" VerticalAlignment="Top" Width="135" Height="25">
+            <ComboBoxItem Content="--fullscreen" HorizontalAlignment="Left" Width="118"/>
+            <ComboBoxItem Content="--scale 1" HorizontalAlignment="Left" Width="118"/>
+            <ComboBoxItem Content="--scale 2" HorizontalAlignment="Left" Width="118"/>
+            <ComboBoxItem Content="--scale 3" HorizontalAlignment="Left" Width="118"/>
+            <ComboBoxItem Content="--scale 4" HorizontalAlignment="Left" Width="118"/>
         </ComboBox>
 
         <Button x:Name="openRom" Content="Open Rom" HorizontalAlignment="Left" Margin="15.143,33.048,0,0" VerticalAlignment="Top" Width="75"/>
@@ -55,6 +56,7 @@ $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{
 
 ## XAML objects and controls
 #
+$screen = $Form.FindName("ScreenSize")
 $browse = $Form.FindName("openRom")
 $about = $Form.FindName("aboutInfo")
 $help = $Form.FindName("helpInfo")
@@ -66,7 +68,9 @@ $browse.Add_Click(
     {
         [void]$FileBrowser.ShowDialog()
         $filePath = '"' + $FileBrowser.FileName + '"'
-        $arguments = '--sync-to-audio no'
+        $arguments = $screen.SelectedItem.Content + ' --sync-to-audio no'
+
+        #[System.Windows.MessageBox]::Show($arguments)
 
         if ($filePath -ne '"' + '"')
             {Start-Process -Wait NanoboyAdvance.exe -ArgumentList $arguments, $filePath}
@@ -74,9 +78,6 @@ $browse.Add_Click(
         # [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
         # [Microsoft.VisualBasic.Interaction]::MsgBox("Please select a GBA rom file first",'OKOnly,Information',"NanoboyAdvance.UI Error")
 
-        # Uncomment below for debugging
-        # [System.Windows.MessageBox]::Show($filePath)
-        # Write-Host "$dgenemu" "$arguments" "$filePath"
     })
 
 $about.Add_Click(
