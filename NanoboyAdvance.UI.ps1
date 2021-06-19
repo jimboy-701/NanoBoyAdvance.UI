@@ -14,22 +14,23 @@ add-type -name win -member $t -namespace native
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
-        Title="NanoboyAdvance.UI" Height="183" Width="359" WindowStartupLocation = "CenterScreen">
+        Title="NanoboyAdvance.UI" Height="183" Width="359" WindowStartupLocation="CenterScreen">
 
-    <Grid>
-        <ComboBox x:Name="ScreenSize" HorizontalAlignment="Left" Margin="29.665,112.237,0,0" VerticalAlignment="Top" Width="135" Height="25">
+    <Grid ShowGridLines="True">
+        <!-- <Label Content="Screen Size" HorizontalAlignment="Left" Margin="18,75,0,0" VerticalAlignment="Top" Width="130" FontSize="14" Height="85"/> -->
+        <ComboBox x:Name="ScreenSize" HorizontalAlignment="Left" Margin="15,60,0,0" VerticalAlignment="Top" Width="120" Height="21">
             <ComboBoxItem Content="--fullscreen" HorizontalAlignment="Left" Width="118"/>
-            <ComboBoxItem Content="--scale 1" HorizontalAlignment="Left" Width="118"/>
-            <ComboBoxItem Content="--scale 2" HorizontalAlignment="Left" Width="118"/>
             <ComboBoxItem Content="--scale 3" HorizontalAlignment="Left" Width="118"/>
             <ComboBoxItem Content="--scale 4" HorizontalAlignment="Left" Width="118"/>
+            <ComboBoxItem Content="--scale 5" HorizontalAlignment="Left" Width="118"/>
+            <ComboBoxItem Content="--scale 6" HorizontalAlignment="Left" Width="118"/>
         </ComboBox>
 
         <Button x:Name="openRom" Content="Open Rom" HorizontalAlignment="Left" Margin="15.143,33.048,0,0" VerticalAlignment="Top" Width="75"/>
         <Button x:Name="aboutInfo" Content="About" HorizontalAlignment="Left" Margin="254,86.08,0,0" VerticalAlignment="Top" Width="75"/>
         <Button x:Name="helpInfo" Content="Help" HorizontalAlignment="Left" Margin="254,111.04,0,0" VerticalAlignment="Top" Width="75"/>
         <Button x:Name="editConfig" Content="Edit Config" HorizontalAlignment="Left" Margin="174,111.04,0,0" VerticalAlignment="Top" Width="75"/>
-        <CheckBox Content="Fullscreen" HorizontalAlignment="Left" Margin="114.571,33.048,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.182,-0.993"/>
+        <CheckBox Content="[Sync Audio]" HorizontalAlignment="Left" Margin="114.571,33.048,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.182,-0.993"/>
 
         <GroupBox Header="A simple launcher for NanoboyAdvance Emulator" HorizontalAlignment="Left" Height="142" VerticalAlignment="Top" Width="336.143" FontSize="14" Margin="4,0,0,0"></GroupBox>
 
@@ -70,7 +71,7 @@ $browse.Add_Click(
         $filePath = '"' + $FileBrowser.FileName + '"'
         $arguments = $screen.SelectedItem.Content + ' --sync-to-audio no'
 
-        #[System.Windows.MessageBox]::Show($arguments)
+        # [System.Windows.MessageBox]::Show($sysvars)
 
         if ($filePath -ne '"' + '"')
             {Start-Process -Wait NanoboyAdvance.exe -ArgumentList $arguments, $filePath}
