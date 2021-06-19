@@ -26,11 +26,11 @@ add-type -name win -member $t -namespace native
             <ComboBoxItem Content="--scale 6" HorizontalAlignment="Left" Width="118"/>
         </ComboBox>
 
-        <Button x:Name="openRom" Content="Open Rom" HorizontalAlignment="Left" Margin="15.143,33.048,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="aboutInfo" Content="About" HorizontalAlignment="Left" Margin="254,86.08,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="helpInfo" Content="Help" HorizontalAlignment="Left" Margin="254,111.04,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="editConfig" Content="Edit Config" HorizontalAlignment="Left" Margin="174,111.04,0,0" VerticalAlignment="Top" Width="75"/>
-        <CheckBox Content="[Sync Audio]" HorizontalAlignment="Left" Margin="114.571,33.048,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.182,-0.993"/>
+        <Button x:Name="OpenRom" Content="Open Rom" HorizontalAlignment="Left" Margin="15.143,33.048,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="AboutInfo" Content="About" HorizontalAlignment="Left" Margin="254,86.08,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="HelpInfo" Content="Help" HorizontalAlignment="Left" Margin="254,111.04,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="EditConfig" Content="Edit Config" HorizontalAlignment="Left" Margin="174,111.04,0,0" VerticalAlignment="Top" Width="75"/>
+        <CheckBox x:Name="SyncAudio" Content="[Sync Audio]" HorizontalAlignment="Left" Margin="114.571,33.048,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.182,-0.993"/>
 
         <GroupBox Header="A simple launcher for NanoboyAdvance Emulator" HorizontalAlignment="Left" Height="142" VerticalAlignment="Top" Width="336.143" FontSize="14" Margin="4,0,0,0"></GroupBox>
 
@@ -58,10 +58,11 @@ $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{
 ## XAML objects and controls
 #
 $screen = $Form.FindName("ScreenSize")
-$browse = $Form.FindName("openRom")
-$about = $Form.FindName("aboutInfo")
-$help = $Form.FindName("helpInfo")
-$config = $Form.FindName("editConfig")
+$browse = $Form.FindName("OpenRom")
+$about = $Form.FindName("AboutInfo")
+$help = $Form.FindName("HelpInfo")
+$config = $Form.FindName("EditConfig")
+$checkbox = $Form.FindName("SyncAudio")
 
 ## Click Actions
 #
@@ -69,12 +70,16 @@ $browse.Add_Click(
     {
         [void]$FileBrowser.ShowDialog()
         $filePath = '"' + $FileBrowser.FileName + '"'
-        $arguments = $screen.SelectedItem.Content + ' --sync-to-audio no'
 
-        # [System.Windows.MessageBox]::Show($sysvars)
+        $arguments = $screen.SelectedItem.Content
+
+        if ($checkbox.IsChecked -eq "True")
+            {$syncaudio = ' --sync-to-audio yes'; $arguments2 = $arguments + $syncaudio}
+
+        ## [System.Windows.MessageBox]::Show($arguments)
 
         if ($filePath -ne '"' + '"')
-            {Start-Process -Wait NanoboyAdvance.exe -ArgumentList $arguments, $filePath}
+            {Start-Process -Wait NanoboyAdvance.exe -ArgumentList $arguments2, $filePath}
 
         # [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
         # [Microsoft.VisualBasic.Interaction]::MsgBox("Please select a GBA rom file first",'OKOnly,Information',"NanoboyAdvance.UI Error")
