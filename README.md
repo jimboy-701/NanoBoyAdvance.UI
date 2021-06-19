@@ -1,3 +1,2 @@
 # NanoBoyAdvance.UI
-A simple NanoBoyAdvance Front-end powered by Powershell and XAML code.
-
+A simple NanoBoyAdvance Front-end GUI in both Powershell and Python flavors.
