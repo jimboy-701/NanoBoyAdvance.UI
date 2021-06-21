@@ -1,3 +1,7 @@
+
+import os
+import sys
+import platform
 from tkinter import *
 window=Tk()
 
