@@ -1,9 +1,9 @@
 ## Load required assemblies
 #
-Add-Type -AssemblyName System.Windows.Forms
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
+Add-Type -AssemblyName System.Windows.Forms
 
-## Hide the powershell window: https://stackoverflow.com/a/27992426/1069307
+## Hide the PowerShell window: https://stackoverflow.com/a/27992426/1069307
 #
 $t = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);'
 add-type -name win -member $t -namespace native
@@ -44,10 +44,12 @@ $reader = (New-Object System.Xml.XmlNodeReader $xaml)
 try { $Form = [Windows.Markup.XamlReader]::Load( $reader ) }
 catch { Write-Host "Unable to load Windows.Markup.XamlReader. Some possible causes for this problem include: .NET Framework is missing PowerShell must be launched with PowerShell -sta, invalid XAML code was encountered."; exit }
 
-# function NullRom {
-# [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
-# [Microsoft.VisualBasic.Interaction]::MsgBox("Please select a GBA rom file first",'OKOnly,Information',"DGEN Error")
-# }
+<#
+function NullRom {
+ [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
+ [Microsoft.VisualBasic.Interaction]::MsgBox("Please select a GBA rom file first",'OKOnly,Information',"DGEN Error")
+ }
+#>
 
 $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{
     InitialDirectory = [Environment]::GetFolderPath('Desktop')
