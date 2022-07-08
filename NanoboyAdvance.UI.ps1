@@ -77,11 +77,13 @@ $browse.Add_Click(
 
         if ($checkbox.IsChecked -eq "True")
             {$syncaudio = ' --sync-to-audio yes'; $arguments2 = $arguments + $syncaudio}
-
-        ## [System.Windows.MessageBox]::Show($arguments)
+            else {
+                $arguments2 = $arguments
+            }
 
         if ($filePath -ne '"' + '"')
             {Start-Process -Wait NanoboyAdvance.exe -ArgumentList $arguments2, $filePath}
+        ## [System.Windows.MessageBox]::Show($arguments2)
 
         # [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
         # [Microsoft.VisualBasic.Interaction]::MsgBox("Please select a GBA rom file first",'OKOnly,Information',"NanoboyAdvance.UI Error")
